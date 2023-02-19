@@ -1,0 +1,7 @@
+.bsp/
+target/
+.idea/
+.metals/
+.vscode/
+journal/
+snapshots/
