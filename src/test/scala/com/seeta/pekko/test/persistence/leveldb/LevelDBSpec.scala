@@ -13,13 +13,13 @@ import com.seeta.pekko.test.{
   Tweets
 }
 import com.typesafe.config.ConfigFactory
-import org.apache.pekko.actor.typed.{ ActorRef => PekkoActorRef }
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.matchers.should.Matchers
 import org.scalatest.wordspec.AnyWordSpecLike
 
 class LevelDBSpec extends AnyWordSpecLike with Matchers with ScalaFutures with BeforeAndAfterAll {
+  private val count       = 5
   private val akkaConfig  = ConfigFactory.load("application-akka.conf")
   private val pekkoConfig = ConfigFactory.load("application-pekko.conf")
   private val akkaTestKit = ActorTestKit(akkaConfig)
@@ -28,21 +28,16 @@ class LevelDBSpec extends AnyWordSpecLike with Matchers with ScalaFutures with B
     akkaTestKit.shutdownTestKit()
   }
 
-  //Every time test is ran
   "LevelDB persistence compatability with akka-persistence" should {
     "be successful" in {
       implicit val system  = akkaTestKit.system
       val akkaProbe        = akkaTestKit.createTestProbe[Response]()
       val akkaLevelDBActor = akkaTestKit.spawn(AkkaLevelDB.behavior(), "leveldb-akka-actor")
-      akkaLevelDBActor ! AddTweet("Tweet 1")
-      akkaLevelDBActor ! AddTweet("Tweet 2")
-      akkaLevelDBActor ! AddTweet("Tweet 3")
-      akkaLevelDBActor ! AddTweet("Tweet 4")
-      akkaLevelDBActor ! AddTweet("Tweet 5")
+      (1 to count).foreach(i => akkaLevelDBActor ! AddTweet(s"Tweet $i"))
 
       akkaLevelDBActor ! GetAllTweetsFromAkka(akkaProbe.ref)
       val tweets = akkaProbe.expectMessageType[Tweets]
-      tweets.all.size shouldBe 5
+      tweets.all.size shouldBe count
 
       showInConsole(s"Shutting down Akka actor (total events = ${tweets.totalEvents})", attentionGrabbing = true)
       akkaTestKit.shutdownTestKit()
@@ -52,7 +47,7 @@ class LevelDBSpec extends AnyWordSpecLike with Matchers with ScalaFutures with B
       val pekkoLevelDBActor = pekkoTestKit.spawn(PekkoLevelDB.behavior(), "leveldb-pekko-actor")
       pekkoLevelDBActor ! GetAllTweetsFromPekko(pekkoProbe.ref)
       val tweetsFromPekko = pekkoProbe.expectMessageType[Tweets]
-      tweetsFromPekko.all.size shouldBe 5
+      tweetsFromPekko.all.size shouldBe count
 
       pekkoLevelDBActor ! DeleteAllTweets
 

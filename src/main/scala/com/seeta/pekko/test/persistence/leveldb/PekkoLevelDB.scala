@@ -1,11 +1,9 @@
 package com.seeta.pekko.test.persistence.leveldb
 
 import org.apache.pekko.actor.typed.Behavior
-import org.apache.pekko.actor.typed.scaladsl.Behaviors
 import org.apache.pekko.persistence.typed.PersistenceId
-import org.apache.pekko.persistence.typed.scaladsl.{ Effect, EventSourcedBehavior }
+import org.apache.pekko.persistence.typed.scaladsl.{ Effect, EventSourcedBehavior, RetentionCriteria }
 import com.seeta.pekko.test._
-import org.slf4j.Logger
 
 object PekkoLevelDB {
   def behavior(): Behavior[Command] = {
@@ -35,6 +33,6 @@ object PekkoLevelDB {
       emptyState = State.initial,
       commandHandler = commandHandler,
       eventHandler = eventHandler
-    )
+    ).withRetention(RetentionCriteria.snapshotEvery(numberOfEvents = 10, keepNSnapshots = 2))
   }
 }

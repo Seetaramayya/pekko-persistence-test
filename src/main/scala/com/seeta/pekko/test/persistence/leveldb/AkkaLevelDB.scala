@@ -2,7 +2,7 @@ package com.seeta.pekko.test.persistence.leveldb
 
 import akka.actor.typed.Behavior
 import akka.persistence.typed.PersistenceId
-import akka.persistence.typed.scaladsl.{ Effect, EventSourcedBehavior }
+import akka.persistence.typed.scaladsl.{ Effect, EventSourcedBehavior, RetentionCriteria }
 import com.seeta.pekko.test._
 
 object AkkaLevelDB {
@@ -33,7 +33,7 @@ object AkkaLevelDB {
       emptyState = State.initial,
       commandHandler = commandHandler,
       eventHandler = eventHandler
-    )
+    ).withRetention(RetentionCriteria.snapshotEvery(numberOfEvents = 10, keepNSnapshots = 2))
   }
 
 }
