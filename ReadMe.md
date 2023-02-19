@@ -21,6 +21,10 @@ things are verified
           actors
         - Logs error or success at the end of the run. If successful wipes out all tweets for the next run.
 
+- [ScalaTest: JDBC PostgresSQL with jackson-son serialization](./src/test/scala/com/seeta/pekko/test/persistence/jdbc/PostgresSQLPersistenceSpec.scala)
+    - More or less like LevelDB scala test
+- [ManualTest: JDBC PostgresSQL with jackson-son serialization](./src/main/scala/com/seeta/pekko/test/persistence/jdbc/PostgresSQLMain.scala)
+    - More or less like LevelDB manual tests
 
 ## Start Postgres locally
 
