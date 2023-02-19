@@ -1,12 +1,12 @@
-package com.seeta.pekko.test.persistence.leveldb
+package com.seeta.pekko.test.persistence.jdbc
 
 import akka.actor.typed.Behavior
 import akka.persistence.typed.PersistenceId
-import com.seeta.pekko.test._
+import com.seeta.pekko.test.Command
 import com.seeta.pekko.test.persistence.shared.AkkaBehaviors
 
-object AkkaLevelDB extends AkkaBehaviors {
+object AkkaPostgresSQL extends AkkaBehaviors {
   def behavior(): Behavior[Command] = eventSourceBehaviourWithSnapshotting(
-    PersistenceId.ofUniqueId("leveldb-persistence-test-id")
+    PersistenceId.ofUniqueId("postgresql-persistence-test-id")
   )
 }

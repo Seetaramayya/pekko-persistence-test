@@ -3,15 +3,7 @@ package com.seeta.pekko.test.persistence.leveldb
 import akka.actor.testkit.typed.scaladsl.ActorTestKit
 import com.seeta.pekko.test.PrintHelpers.showInConsole
 import org.apache.pekko.actor.testkit.typed.scaladsl.{ ActorTestKit => PekkoTestKit }
-import com.seeta.pekko.test.{
-  AddTweet,
-  Command,
-  DeleteAllTweets,
-  GetAllTweetsFromAkka,
-  GetAllTweetsFromPekko,
-  Response,
-  Tweets
-}
+import com.seeta.pekko.test._
 import com.typesafe.config.ConfigFactory
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.concurrent.ScalaFutures

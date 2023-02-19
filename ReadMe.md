@@ -20,3 +20,20 @@ things are verified
           , `expected number of messages as number` argument which loads `application-pekko.conf` and creates pekko
           actors
         - Logs error or success at the end of the run. If successful wipes out all tweets for the next run.
+
+
+## Start Postgres locally
+
+### PostgresSQL commands
+
+```shell
+docker compose up postgres # to start the container
+
+# to find all the table names: \d+
+# to describe journal: \d+ journal
+# to describe snapshot: \d+ snapshot
+
+select * from journal;
+
+select * from snapshot;
+```

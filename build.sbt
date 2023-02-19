@@ -2,6 +2,7 @@ ThisBuild / scalaVersion := "2.13.10"
 ThisBuild / version := "0.1.0-SNAPSHOT"
 ThisBuild / organization := "com.seeta"
 ThisBuild / resolvers += "Apache Snapshot Repo" at "https://repository.apache.org/content/groups/snapshots/"
+ThisBuild / resolvers += "Apache Nexus Snapshots" at "https://repository.apache.org/content/repositories/snapshots/"
 
 lazy val root = (project in file("."))
   .settings(
