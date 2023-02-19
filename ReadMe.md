@@ -1,5 +1,8 @@
 # Pekko Persistence Compatability Test
 
+> **Warning**
+> "pekko-persistence-jdbc" is not available in remote repository yet
+
 In this project I am trying to test `pekko-persistence` is working after migrating from `akka-persistence`. Following
 things are verified
 
